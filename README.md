@@ -58,7 +58,7 @@ function removeComponent(address component, bool force) external onlyOwner onlyW
     }
 ```
 
-The PoC contains the same logic but removing some dependencies on other contracts in the protocol.
+Note: The PoC contains the same logic but removing some dependencies on other contracts in the protocol.
 
 ## Error
 Running ```slither . ``` produces the following error message
