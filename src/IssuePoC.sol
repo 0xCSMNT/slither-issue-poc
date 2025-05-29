@@ -51,8 +51,10 @@ contract IssuePoC {
     // Removes a component from the portfolio
     // If force=true, burns any remaining balance by sending to dead address
     function removeComponent(address component, bool force) external onlyOwner onlyWhenNotRebalancing {
-        // Check if component exists
+        // Check if component exists & has no balance
+        // The intention is to prevent removing a component that has a balance unless force is true
         if (!componentAllocations[component].isComponent) revert("Not set");
+        if (!force && IERC20(component).balanceOf(address(this)) > 0) revert("Component has balance");
 
         // If force is true, attempt to burn any remaining tokens
         if (force) {
