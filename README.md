@@ -1,4 +1,4 @@
-# IssuePoC (Proof of Concept)
+# Slither Issue Proof of Concept
 
 This repository contains a simplified version of a larger portfolio management contract that demonstrates a potential issue with token removal.
 
@@ -48,7 +48,7 @@ function removeComponent(address component, bool force) external onlyOwner onlyW
 ## Error
 Running ```slither . ``` produces the following error message
 
-```
+```shell
 ➜  slither-issue git:(main) slither .
 'forge clean' running (wd: /Users/cormacdaly/Documents/Projects/slither-issue)
 'forge config --json' running
