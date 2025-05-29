@@ -25,7 +25,7 @@ Note: The test includes a timestamp warp to prevent underflow in the constructor
 
 The `removeComponent` function with `force=true` attempts to burn any remaining token balance by transferring tokens to the dead address (`0x000000000000000000000000000000000000dEaD`). 
 
-Slither ran perfectly on all development until the nested try catch was added to this function
+Slither ran perfectly on all development until the nested try catch was added to this function (taken from the real contract)
 
 ```solidity
 function removeComponent(address component, bool force) external onlyOwner onlyWhenNotRebalancing {
@@ -42,8 +42,23 @@ function removeComponent(address component, bool force) external onlyOwner onlyW
                 }
             } catch {}
         }
+
+        uint256 length = components.length;
+        for (uint256 i = 0; i < length; i++) {
+            if (components[i] == component) {
+                if (i != length - 1) {
+                    components[i] = components[length - 1];
+                }
+                components.pop();
+                delete componentAllocations[component];
+                emit EventsLib.ComponentRemoved(component);
+                return;
+            }
+        }
+    }
 ```
 
+The PoC contains the same logic but removing some dependencies on other contracts in the protocol.
 
 ## Error
 Running ```slither . ``` produces the following error message
